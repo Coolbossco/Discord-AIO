@@ -1,6 +1,6 @@
 const fs = require('fs');
 const ms = require('ms');
-const config = require('./config.json');
+const config = require('../config.json');
 const client = new Client();
 
 client.on('ready', () => {

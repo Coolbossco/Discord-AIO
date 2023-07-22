@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const Discord = require('discord.js');
 const Client = require('./client/Client');
 const config = require('./config.json');
@@ -6,12 +7,22 @@ const config = require('./config.json');
 const client = new Client();
 client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const loadCommands = (dir) => {
+    const commandFiles = fs.readdirSync(dir).filter(file => file.endsWith('.js') || fs.lstatSync(path.join(dir, file)).isDirectory());
 
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
-}
+    for (const file of commandFiles) {
+        const fullPath = path.join(dir, file);
+        if(fs.lstatSync(fullPath).isDirectory()) {
+            loadCommands(fullPath);
+        } else {
+            const command = require(fullPath);
+            client.commands.set(command.name, command);
+            console.log(`👌 Command loaded: ${command.name}`);
+        }
+    }
+};
+
+loadCommands('./commands');
 
 client.once('ready', () => {
     console.log('Ready!');
