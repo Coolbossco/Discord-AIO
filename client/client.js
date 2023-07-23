@@ -2,8 +2,17 @@ const Discord = require('discord.js');
 const config = require('../config.json');
 
 class Client extends Discord.Client {
-    constructor(options) {
-        super(options);
+    constructor(options = {}) {
+        super({
+            ...options,
+            intents: [
+                'Guilds', 
+                'GuildMembers', 
+                'GuildMessages', 
+                'DirectMessages', 
+                'GuildPresences'
+            ]
+        });
     }
 
     logCommand(message) {
