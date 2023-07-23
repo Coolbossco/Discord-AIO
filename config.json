@@ -1,4 +1,6 @@
 {
   "prefix": "!",
-  "token": "your-bot-token-goes-here"
+  "token": "your-bot-token-goes-here",
+  "commandLogChannel": "your-command-log-channel-id",
+  "moderationLogChannel": "your-moderation-log-channel-id"
 }

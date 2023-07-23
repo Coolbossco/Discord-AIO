@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Discord = require('discord.js');
-const Client = require('./client/Client');
+const Client = require('./client/client.js');
 const config = require('./config.json');
 
 const client = new Client();
@@ -36,11 +36,14 @@ client.on('message', message => {
 
     if (!client.commands.has(command)) return;
 
+    // Log the command usage
+    client.logCommand(message);
+
     try {
         client.commands.get(command).execute(message, args);
     } catch (error) {
         console.error(error);
-        message.reply('there was an error trying to execute that command!');
+        message.reply('There was an error trying to execute that command!');
     }
 });
 
