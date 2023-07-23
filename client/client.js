@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const config = require('./config.json');
+const config = require('../config.json');
 
 class Client extends Discord.Client {
     constructor(options) {
